@@ -1,12 +1,14 @@
 package com.app.management.model.services;
 
+import java.util.Optional;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import com.app.management.model.entities.Users;
 import com.app.management.model.exceptions.DuplicateInstanceException;
 import com.app.management.model.repositories.UsersRepository;
 import com.app.management.model.services.exceptions.InvalidParameter;
+import com.app.management.model.exceptions.InstanceNotFoundException;
 
 @Service
 public class UsersServiceImpl implements UsersService {
@@ -41,8 +43,17 @@ public class UsersServiceImpl implements UsersService {
         return user;
     }
 
-    
+    @Override
+    public Users loginFromId(String id) throws InstanceNotFoundException {
+        return checkUser(id);
+    }
 
-
+    private Users checkUser(String id) throws InstanceNotFoundException {
+        Optional<Users> user = usersRepository.findById(id);
+        if (!user.isPresent()) {
+            throw new InstanceNotFoundException("User not found");
+        }
+        return user.get();
+    }
     
 }
