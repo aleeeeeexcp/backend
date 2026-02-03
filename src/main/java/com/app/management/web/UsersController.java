@@ -6,10 +6,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.management.bean.AuthenticatedUsersDto;
 import com.app.management.bean.LoginParamsDto;
 import com.app.management.bean.UsersDto;
-import com.app.management.mapper.UserDtoConversor;
-
+import com.app.management.config.JwtGenerator;
+import com.app.management.config.JwtInfo;
+import com.app.management.mapper.UserDtoMapper;
+import com.app.management.model.Users;
 import com.app.management.service.UsersService;
 import com.app.management.service.exceptions.DuplicateInstanceException;
 import com.app.management.service.exceptions.InvalidParameterException;
@@ -20,20 +23,31 @@ public class UsersController {
     
     private UsersService usersService;
 
-    public UsersController(UsersService usersService) {
+    private JwtGenerator jwtGenerator;
+
+    public UsersController(UsersService usersService, JwtGenerator jwtGenerator) {
         this.usersService = usersService;
+        this.jwtGenerator = jwtGenerator;
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<UsersDto> singUp(@RequestBody UsersDto usersDto) throws DuplicateInstanceException {
-        usersService.signUp(UserDtoConversor.toUsers(usersDto));
-        return ResponseEntity.ok(usersDto);
+    public ResponseEntity<AuthenticatedUsersDto> singUp(@RequestBody UsersDto usersDto) throws DuplicateInstanceException {
+        Users user = UserDtoMapper.toUsers(usersDto);
+        usersService.signUp(user);
+        AuthenticatedUsersDto authenticatedUsersDto = UserDtoMapper.toAuthenticatedUserDto(generateServiceToken(user), user);
+        return ResponseEntity.ok(authenticatedUsersDto);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<UsersDto> login(@RequestBody LoginParamsDto loginParamsDto) throws InvalidParameterException {
-        UsersDto user = UserDtoConversor.toUsersDto(usersService.login(loginParamsDto.getUsername(), loginParamsDto.getPassword()));
-        return ResponseEntity.ok(user);
+    public ResponseEntity<AuthenticatedUsersDto> login(@RequestBody LoginParamsDto loginParamsDto) throws InvalidParameterException {
+        Users user = usersService.login(loginParamsDto.getUsername(), loginParamsDto.getPassword());
+        AuthenticatedUsersDto authenticatedUsersDto = UserDtoMapper.toAuthenticatedUserDto(generateServiceToken(user), user);
+        return ResponseEntity.ok(authenticatedUsersDto);
+    }
+
+    private String generateServiceToken(Users users){
+        JwtInfo jwtInfo = new JwtInfo(users.getId(), users.getUsername(), users.getRoleType().name());
+        return jwtGenerator.generate(jwtInfo);
     }
 
 }

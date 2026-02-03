@@ -2,10 +2,11 @@ package com.app.management.mapper;
 
 import com.app.management.bean.UsersDto;
 import com.app.management.model.Users;
+import com.app.management.bean.AuthenticatedUsersDto;
 
-public class UserDtoConversor {
+public class UserDtoMapper {
     
-    private UserDtoConversor() {
+    private UserDtoMapper() {
     }
 
     public static final UsersDto toUsersDto(Users user) {
@@ -15,4 +16,10 @@ public class UserDtoConversor {
     public static final Users toUsers(UsersDto usersDto) {
         return new Users(usersDto.getId(), usersDto.getUsername(), usersDto.getEmail(), usersDto.getPassword());
     }
+
+    public final static AuthenticatedUsersDto toAuthenticatedUserDto(String serviceToken, Users user) {
+		
+		return new AuthenticatedUsersDto(serviceToken, toUsersDto(user));
+		
+	}
 }
