@@ -6,11 +6,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.management.bean.LoginParamsDto;
 import com.app.management.bean.UsersDto;
 import com.app.management.mapper.UserDtoConversor;
-import com.app.management.model.Users;
-import com.app.management.services.UsersService;
-import com.app.management.services.exceptions.DuplicateInstanceException;
+
+import com.app.management.service.UsersService;
+import com.app.management.service.exceptions.DuplicateInstanceException;
+import com.app.management.service.exceptions.InvalidParameterException;
 
 @RestController
 @RequestMapping("/users")
@@ -23,8 +25,15 @@ public class UsersController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<Users> singUp(@RequestBody UsersDto usersDto) throws DuplicateInstanceException {
+    public ResponseEntity<UsersDto> singUp(@RequestBody UsersDto usersDto) throws DuplicateInstanceException {
         usersService.signUp(UserDtoConversor.toUsers(usersDto));
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(usersDto);
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<UsersDto> login(@RequestBody LoginParamsDto loginParamsDto) throws InvalidParameterException {
+        UsersDto user = UserDtoConversor.toUsersDto(usersService.login(loginParamsDto.getUsername(), loginParamsDto.getPassword()));
+        return ResponseEntity.ok(user);
+    }
+
 }

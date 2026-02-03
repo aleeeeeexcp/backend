@@ -1,15 +1,16 @@
-package com.app.management.services;
+package com.app.management.service;
 
 import java.util.Optional;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.app.management.constants.RoleType;
 import com.app.management.model.Users;
-import com.app.management.repositories.UsersRepository;
-import com.app.management.services.exceptions.DuplicateInstanceException;
-import com.app.management.services.exceptions.InstanceNotFoundException;
-import com.app.management.services.exceptions.InvalidParameterException;
+import com.app.management.repository.UsersRepository;
+import com.app.management.service.exceptions.DuplicateInstanceException;
+import com.app.management.service.exceptions.InstanceNotFoundException;
+import com.app.management.service.exceptions.InvalidParameterException;
 
 @Service
 public class UsersServiceImpl implements UsersService {
@@ -31,6 +32,7 @@ public class UsersServiceImpl implements UsersService {
         
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
+        user.setRoleType(RoleType.USER);
 
         usersRepository.save(user);
     }

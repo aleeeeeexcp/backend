@@ -9,7 +9,7 @@ public class UserDtoConversor {
     }
 
     public static final UsersDto toUsersDto(Users user) {
-        return new UsersDto(user.getId(), user.getUsername(), user.getEmail());
+        return new UsersDto(user.getId(), user.getUsername(), user.getEmail(), user.getRoleType().toString());
     }
 
     public static final Users toUsers(UsersDto usersDto) {

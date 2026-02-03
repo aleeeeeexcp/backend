@@ -1,8 +1,9 @@
 package com.app.management.model;
 
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
+import com.app.management.constants.RoleType;
 
 @Document(collection = "users")
 public class Users {
@@ -12,7 +13,7 @@ public class Users {
     private String username;
     private String email;
     private String password;
-
+    private RoleType role;
     public Users(){}
 
     public Users(String id, String username, String email, String password) {
@@ -47,5 +48,11 @@ public class Users {
         this.password = password;
     }
 
-    
+    public RoleType getRoleType() {
+        return role;
+    }
+
+    public void setRoleType(RoleType role) {
+        this.role = role;
+    }
 }

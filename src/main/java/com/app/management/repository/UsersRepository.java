@@ -1,4 +1,4 @@
-package com.app.management.repositories;
+package com.app.management.repository;
 
 import java.util.Optional;
 import org.springframework.data.mongodb.repository.MongoRepository;

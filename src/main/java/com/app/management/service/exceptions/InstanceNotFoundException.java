@@ -1,4 +1,4 @@
-package com.app.management.services.exceptions;
+package com.app.management.service.exceptions;
 
 public class InstanceNotFoundException extends Exception {
 
