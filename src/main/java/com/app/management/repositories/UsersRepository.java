@@ -1,12 +1,11 @@
-package com.app.management.model.repositories;
-
-import com.app.management.model.entities.Users;
+package com.app.management.repositories;
 
 import java.util.Optional;
-
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface UsersRepository extends MongoRepository<Users , Long> {
+import com.app.management.model.Users;
+
+public interface UsersRepository extends MongoRepository<Users, String> {
 
     boolean existsByEmail(String email);
 

@@ -1,14 +1,15 @@
-package com.app.management.model.services;
+package com.app.management.services;
 
 import java.util.Optional;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import com.app.management.model.entities.Users;
-import com.app.management.model.exceptions.DuplicateInstanceException;
-import com.app.management.model.repositories.UsersRepository;
-import com.app.management.model.services.exceptions.InvalidParameter;
-import com.app.management.model.exceptions.InstanceNotFoundException;
+
+import com.app.management.model.Users;
+import com.app.management.repositories.UsersRepository;
+import com.app.management.services.exceptions.DuplicateInstanceException;
+import com.app.management.services.exceptions.InstanceNotFoundException;
+import com.app.management.services.exceptions.InvalidParameterException;
 
 @Service
 public class UsersServiceImpl implements UsersService {
@@ -35,10 +36,10 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public Users login(String username, String password) throws InvalidParameter {
+    public Users login(String username, String password) throws InvalidParameterException {
         Users user = usersRepository.findByUsername(username);
         if (user == null || !passwordEncoder.matches(password, user.getPassword())) {
-            throw new InvalidParameter("Invalid username or password");
+            throw new InvalidParameterException("Invalid username or password");
         }
         return user;
     }

@@ -1,4 +1,4 @@
-package com.app.management.model.exceptions;
+package com.app.management.services.exceptions;
 
 public class DuplicateInstanceException extends Exception {
     
