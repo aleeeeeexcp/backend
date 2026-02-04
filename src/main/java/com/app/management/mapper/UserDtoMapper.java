@@ -29,7 +29,10 @@ public class UserDtoMapper {
 
     public final static AuthenticatedUsersDto toAuthenticatedUserDto(String serviceToken, Users user) {
 		
-		return new AuthenticatedUsersDto(serviceToken, toUsersDto(user));
+		return AuthenticatedUsersDto.builder()
+                .serviceToken(serviceToken)
+                .userDto(toUsersDto(user))
+                .build();
 		
 	}
 }
