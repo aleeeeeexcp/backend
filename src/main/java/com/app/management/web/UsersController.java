@@ -46,7 +46,8 @@ public class UsersController {
     }
 
     private String generateServiceToken(Users users){
-        JwtInfo jwtInfo = new JwtInfo(users.getId(), users.getUsername(), users.getRoleType().name());
+        String roleName = users.getRoleType() != null ? users.getRoleType().name() : "USER";
+        JwtInfo jwtInfo = new JwtInfo(users.getId(), users.getUsername(), roleName);
         return jwtGenerator.generate(jwtInfo);
     }
 

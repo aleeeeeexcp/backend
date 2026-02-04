@@ -10,11 +10,21 @@ public class UserDtoMapper {
     }
 
     public static final UsersDto toUsersDto(Users user) {
-        return new UsersDto(user.getId(), user.getUsername(), user.getEmail(), user.getRoleType().toString());
+        return UsersDto.builder()
+                .id(user.getId())
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .roleType(user.getRoleType() != null ? user.getRoleType().toString() : null)
+                .build();
     }
 
     public static final Users toUsers(UsersDto usersDto) {
-        return new Users(usersDto.getId(), usersDto.getUsername(), usersDto.getEmail(), usersDto.getPassword());
+        return Users.builder()
+                .id(usersDto.getId())
+                .username(usersDto.getUsername())
+                .email(usersDto.getEmail())
+                .password(usersDto.getPassword())
+                .build();
     }
 
     public final static AuthenticatedUsersDto toAuthenticatedUserDto(String serviceToken, Users user) {
