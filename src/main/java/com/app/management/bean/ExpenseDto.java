@@ -1,7 +1,4 @@
-package com.app.management.model;
-
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+package com.app.management.bean;
 
 import com.mongodb.lang.Nullable;
 
@@ -16,17 +13,17 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(collection = "expenses")
-public class Expense {
-    
-    @Id
+public class ExpenseDto {
+
     private String id;
     private String description;
-    private double amount;
+    private Double amount;
     private String date;
-    private String userId;
 
     @Nullable
-    private String categoryId;
+    private CategoryDto category;
+
+    @Nullable
+    private String userId;
     
 }
