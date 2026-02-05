@@ -1,5 +1,7 @@
 package com.app.management.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import com.app.management.model.Expense;
 import com.app.management.repository.ExpenseRepository;
@@ -15,6 +17,10 @@ public class ExpenseService {
     @SuppressWarnings("null")
     public Expense createExpense(Expense expense) {
         return expenseRepository.save(expense);
+    }
+
+    public List<Expense> getAllUsersExpenses(String userId) {
+        return expenseRepository.findByUserId(userId);
     }
 
 }

@@ -37,4 +37,15 @@ public class ExpenseController {
         return ResponseEntity.ok(createdExpenseDto); 
     }
 
+    @GetMapping
+    public ResponseEntity<List<ExpenseDto>> getAllUsersExpenses(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userId = authentication.getName();
+        List<Expense> expenses = expenseService.getAllUsersExpenses(userId);
+        List<ExpenseDto> expenseDtos = expenses.stream()
+                .map(ExpenseMapper::toExpenseDto)
+                .toList();
+        return ResponseEntity.ok(expenseDtos);
+    }
+
 }
