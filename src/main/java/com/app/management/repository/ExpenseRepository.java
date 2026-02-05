@@ -8,5 +8,6 @@ import com.app.management.model.Expense;
 public interface ExpenseRepository extends MongoRepository<Expense, String> {
     
     List<Expense> findByUserId(String userId);
+    List<Expense> findByUserIdAndCategoryId(String userId, String categoryId);
     
 }

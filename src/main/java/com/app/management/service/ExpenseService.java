@@ -23,4 +23,8 @@ public class ExpenseService {
         return expenseRepository.findByUserId(userId);
     }
 
+    public List<Expense> getAllUsersExpensesByCategory(String userId, String categoryId) {
+        return expenseRepository.findByUserIdAndCategoryId(userId, categoryId);
+    }
+
 }

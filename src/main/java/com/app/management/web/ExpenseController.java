@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.management.bean.ExpenseDto;
@@ -42,6 +43,17 @@ public class ExpenseController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userId = authentication.getName();
         List<Expense> expenses = expenseService.getAllUsersExpenses(userId);
+        List<ExpenseDto> expenseDtos = expenses.stream()
+                .map(ExpenseMapper::toExpenseDto)
+                .toList();
+        return ResponseEntity.ok(expenseDtos);
+    }
+
+    @GetMapping("/byCategory")
+    public ResponseEntity<List<ExpenseDto>> getAllUsersExpensesByCategory(@RequestParam String categoryId){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userId = authentication.getName();
+        List<Expense> expenses = expenseService.getAllUsersExpensesByCategory(userId, categoryId);
         List<ExpenseDto> expenseDtos = expenses.stream()
                 .map(ExpenseMapper::toExpenseDto)
                 .toList();

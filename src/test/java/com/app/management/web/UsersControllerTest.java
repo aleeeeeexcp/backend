@@ -55,7 +55,7 @@ class UsersControllerTest {
 
         when(jwtGenerator.generate(any(JwtInfo.class))).thenReturn("token123");
 
-        mockMvc.perform(post("/users/signup")
+        mockMvc.perform(post("/api/users/signup")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(usersDto)))
                 .andExpect(status().isOk())
@@ -82,7 +82,7 @@ class UsersControllerTest {
         when(usersService.login(loginParamsDto.getUsername(), loginParamsDto.getPassword())).thenReturn(user);
         when(jwtGenerator.generate(any(JwtInfo.class))).thenReturn("token456");
 
-        mockMvc.perform(post("/users/login")
+        mockMvc.perform(post("/api/users/login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(loginParamsDto)))
                 .andExpect(status().isOk())

@@ -1,7 +1,6 @@
 package com.app.management.mapper;
 
 import com.app.management.bean.ExpenseDto;
-import com.app.management.model.Category;
 import com.app.management.model.Expense;
 
 public class ExpenseMapper {
@@ -9,13 +8,13 @@ public class ExpenseMapper {
     private ExpenseMapper() {
     }
 
-    public static final ExpenseDto toExpenseDto(Expense expense/* , Category category */) {
+    public static final ExpenseDto toExpenseDto(Expense expense) {
         return ExpenseDto.builder()
                 .id(expense.getId())
                 .amount(expense.getAmount())
                 .description(expense.getDescription())
                 .date(expense.getDate())
-                //.category(category != null ? CategoryMapper.toCategoryDto(category) : null)
+                .categoryId(expense.getCategoryId() != null ? expense.getCategoryId() : null)
                 .build();
     }
 
@@ -26,7 +25,7 @@ public class ExpenseMapper {
                 .description(expenseDto.getDescription())
                 .date(expenseDto.getDate())
                 .userId(expenseDto.getUserId() != null ? expenseDto.getUserId() : null)
-                //.categoryId(expenseDto.getCategory() != null ? expenseDto.getCategory().getId() : null)
+                .categoryId(expenseDto.getCategoryId() != null ? expenseDto.getCategoryId() : null)
                 .build();
     }
 }

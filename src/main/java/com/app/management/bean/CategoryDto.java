@@ -1,7 +1,5 @@
 package com.app.management.bean;
 
-import com.mongodb.lang.Nullable;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,17 +11,10 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ExpenseDto {
-
+public class CategoryDto {
+    
     private String id;
+    private String name;
     private String description;
-    private Double amount;
-    private String date;
-
-    @Nullable
-    private String categoryId;
-
-    @Nullable
-    private String userId;
     
 }
