@@ -4,9 +4,9 @@ import com.app.management.bean.UsersDto;
 import com.app.management.model.Users;
 import com.app.management.bean.AuthenticatedUsersDto;
 
-public class UserDtoMapper {
+public class UsersMapper {
     
-    private UserDtoMapper() {
+    private UsersMapper() {
     }
 
     public static final UsersDto toUsersDto(Users user) {

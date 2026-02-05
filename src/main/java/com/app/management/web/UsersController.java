@@ -11,7 +11,7 @@ import com.app.management.bean.LoginParamsDto;
 import com.app.management.bean.UsersDto;
 import com.app.management.config.JwtGenerator;
 import com.app.management.config.JwtInfo;
-import com.app.management.mapper.UserDtoMapper;
+import com.app.management.mapper.UsersMapper;
 import com.app.management.model.Users;
 import com.app.management.service.UsersService;
 import com.app.management.service.exceptions.DuplicateInstanceException;
@@ -32,16 +32,16 @@ public class UsersController {
 
     @PostMapping("/signup")
     public ResponseEntity<AuthenticatedUsersDto> singUp(@RequestBody UsersDto usersDto) throws DuplicateInstanceException {
-        Users user = UserDtoMapper.toUsers(usersDto);
+        Users user = UsersMapper.toUsers(usersDto);
         usersService.signUp(user);
-        AuthenticatedUsersDto authenticatedUsersDto = UserDtoMapper.toAuthenticatedUserDto(generateServiceToken(user), user);
+        AuthenticatedUsersDto authenticatedUsersDto = UsersMapper.toAuthenticatedUserDto(generateServiceToken(user), user);
         return ResponseEntity.ok(authenticatedUsersDto);
     }
 
     @PostMapping("/login")
     public ResponseEntity<AuthenticatedUsersDto> login(@RequestBody LoginParamsDto loginParamsDto) throws InvalidParameterException {
         Users user = usersService.login(loginParamsDto.getUsername(), loginParamsDto.getPassword());
-        AuthenticatedUsersDto authenticatedUsersDto = UserDtoMapper.toAuthenticatedUserDto(generateServiceToken(user), user);
+        AuthenticatedUsersDto authenticatedUsersDto = UsersMapper.toAuthenticatedUserDto(generateServiceToken(user), user);
         return ResponseEntity.ok(authenticatedUsersDto);
     }
 
