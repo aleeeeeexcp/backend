@@ -18,7 +18,7 @@ import com.app.management.service.exceptions.DuplicateInstanceException;
 import com.app.management.service.exceptions.InvalidParameterException;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 public class UsersController {
     
     private UsersService usersService;

@@ -17,7 +17,7 @@ import com.app.management.model.Expense;
 import com.app.management.service.ExpenseService;
 
 @RestController
-@RequestMapping("/expenses")
+@RequestMapping("/api/expenses")
 public class ExpenseController {
     
     private ExpenseService expenseService;
