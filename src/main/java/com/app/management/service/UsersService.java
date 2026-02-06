@@ -1,5 +1,7 @@
 package com.app.management.service;
 
+import java.util.List;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.app.management.constants.RoleType;
@@ -39,6 +41,10 @@ public class UsersService {
         }
         return user;
     } 
+
+    public List<Users> getAllUsers() {
+        return usersRepository.findAll();
+    }
 
     public void deleteUsers(String id) {
         usersRepository.deleteById(id);
