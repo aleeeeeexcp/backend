@@ -1,5 +1,7 @@
 package com.app.management.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.app.management.model.Category;
@@ -19,8 +21,14 @@ public class CategoryService {
         return categoryRepository.save(category);
     }
 
+    @SuppressWarnings("null")
     public Category getCategoryById(String id) {
         return categoryRepository.findById(id).orElse(null);
     }
+
+    public List<Category> getAllCategories() {
+        return categoryRepository.findAll();
+    }
+    
 
 }

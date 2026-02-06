@@ -1,6 +1,10 @@
 package com.app.management.web;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +29,14 @@ public class CategoryController {
         Category createdCategory = categoryService.createCategory(category);
         return ResponseEntity.ok(new CategoryDto(createdCategory.getId(), createdCategory.getName(), createdCategory.getDescription()));
     }
-    
+
+    @GetMapping
+    public ResponseEntity<List<CategoryDto>> getAllCategories() {
+        List<Category> categories = categoryService.getAllCategories();
+        List<CategoryDto> categoryDtos = categories.stream()
+                .map(category -> new CategoryDto(category.getId(), category.getName(), category.getDescription()))
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(categoryDtos);
+    }
     
 }

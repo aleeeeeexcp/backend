@@ -20,5 +20,5 @@ public class IncomeDto {
     @Nullable
     private String userId;
     @Nullable
-    private CategoryDto category;
+    private String categoryId;
 }

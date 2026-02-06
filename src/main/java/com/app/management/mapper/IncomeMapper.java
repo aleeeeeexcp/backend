@@ -1,7 +1,6 @@
 package com.app.management.mapper;
 
 import com.app.management.bean.IncomeDto;
-import com.app.management.model.Category;
 import com.app.management.model.Income;
 
 public class IncomeMapper {
@@ -9,7 +8,7 @@ public class IncomeMapper {
     private IncomeMapper() {
     }
 
-    public static final IncomeDto toIncomeDto(Income income/* , Category category */) {
+    public static final IncomeDto toIncomeDto(Income income) {
 
         return IncomeDto.builder()
                 .id(income.getId())
@@ -18,7 +17,7 @@ public class IncomeMapper {
                 .description(income.getDescription())
                 .date(income.getDate().toString())
                 .userId(income.getUserId())
-                //.category(CategoryMapper.toCategoryDto(category))
+                .categoryId(income.getCategoryId()  != null ? income.getCategoryId() : null)
                 .build();
                 
     }
@@ -31,7 +30,7 @@ public class IncomeMapper {
                 .description(incomeDto.getDescription())
                 .date(incomeDto.getDate())
                 .userId(incomeDto.getUserId())
-                //.category(CategoryMapper.toCategory(incomeDto.getCategory()))
+                .categoryId(incomeDto.getCategoryId()  != null ? incomeDto.getCategoryId() : null)
                 .build();
     }
 }
