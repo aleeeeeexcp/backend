@@ -24,5 +24,10 @@ public class IncomeService {
     public List<Income> getAllUsersIncomes(String userId) {
         return incomeRepository.findByUserId(userId);
     }
+
+    @SuppressWarnings("null")
+    public void deleteIncome(String userId, String incomeId) {
+        incomeRepository.deleteById(incomeId);
+    }
     
 }

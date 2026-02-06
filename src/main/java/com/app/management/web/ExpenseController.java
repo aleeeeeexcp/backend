@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -58,6 +59,14 @@ public class ExpenseController {
                 .map(ExpenseMapper::toExpenseDto)
                 .toList();
         return ResponseEntity.ok(expenseDtos);
+    }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<Void> deleteExpense(@RequestParam String expenseId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userId = authentication.getName();
+        expenseService.deleteExpense(userId, expenseId);
+        return ResponseEntity.noContent().build();
     }
 
 }

@@ -27,4 +27,9 @@ public class ExpenseService {
         return expenseRepository.findByUserIdAndCategoryId(userId, categoryId);
     }
 
+    @SuppressWarnings("null")
+    public void deleteExpense(String userId,String expenseId) {
+        expenseRepository.deleteById(expenseId);
+    }
+
 }
