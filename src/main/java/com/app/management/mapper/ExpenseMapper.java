@@ -15,6 +15,7 @@ public class ExpenseMapper {
                 .description(expense.getDescription())
                 .date(expense.getDate())
                 .categoryId(expense.getCategoryId() != null ? expense.getCategoryId() : null)
+                .userId(expense.getUserId() != null ? expense.getUserId() : null)
                 .build();
     }
 
