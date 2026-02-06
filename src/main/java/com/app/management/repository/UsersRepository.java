@@ -13,4 +13,6 @@ public interface UsersRepository extends MongoRepository<Users, String> {
 
     Users findByEmail(String email);
 
+    void deleteById(@SuppressWarnings("null") String id);
+
 }

@@ -1,9 +1,11 @@
 package com.app.management.web;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.management.bean.AuthenticatedUsersDto;
@@ -43,6 +45,12 @@ public class UsersController {
         Users user = usersService.login(loginParamsDto.getUsername(), loginParamsDto.getPassword());
         AuthenticatedUsersDto authenticatedUsersDto = UsersMapper.toAuthenticatedUserDto(generateServiceToken(user), user);
         return ResponseEntity.ok(authenticatedUsersDto);
+    }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<Void> deleteUsers(@RequestParam String id) {
+        usersService.deleteUsers(id);
+        return ResponseEntity.noContent().build();
     }
 
     private String generateServiceToken(Users users){
