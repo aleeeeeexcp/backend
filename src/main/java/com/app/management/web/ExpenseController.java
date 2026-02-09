@@ -69,4 +69,48 @@ public class ExpenseController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/sortedByAmount")
+    public ResponseEntity<List<ExpenseDto>> getAllUsersExpensesSortedByAmount(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userId = authentication.getName();
+        List<Expense> expenses = expenseService.getAllUsersExpensesSortedByAmount(userId);
+        List<ExpenseDto> expenseDtos = expenses.stream()
+                .map(ExpenseMapper::toExpenseDto)
+                .toList();
+        return ResponseEntity.ok(expenseDtos);
+    }
+
+    @GetMapping("/sortedByDate")
+    public ResponseEntity<List<ExpenseDto>> getAllUsersExpensesSortedByDate(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userId = authentication.getName();
+        List<Expense> expenses = expenseService.getAllUsersExpensesSortedByDate(userId);
+        List<ExpenseDto> expenseDtos = expenses.stream()
+                .map(ExpenseMapper::toExpenseDto)
+                .toList();
+        return ResponseEntity.ok(expenseDtos);
+    }
+
+    @GetMapping("/byCategory/sortedByAmount")
+    public ResponseEntity<List<ExpenseDto>> getAllUsersExpensesByCategorySortedByAmount(@RequestParam String categoryId){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userId = authentication.getName();
+        List<Expense> expenses = expenseService.getAllUsersExpensesByCategorySortedByAmount(userId, categoryId);
+        List<ExpenseDto> expenseDtos = expenses.stream()
+                .map(ExpenseMapper::toExpenseDto)
+                .toList();
+        return ResponseEntity.ok(expenseDtos);
+    }
+
+    @GetMapping("/byCategory/sortedByDate")
+    public ResponseEntity<List<ExpenseDto>> getAllUsersExpensesByCategorySortedByDate(@RequestParam String categoryId){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userId = authentication.getName();
+        List<Expense> expenses = expenseService.getAllUsersExpensesByCategorySortedByDate(userId, categoryId);
+        List<ExpenseDto> expenseDtos = expenses.stream()
+                .map(ExpenseMapper::toExpenseDto)
+                .toList();
+        return ResponseEntity.ok(expenseDtos);
+    }
+
 }

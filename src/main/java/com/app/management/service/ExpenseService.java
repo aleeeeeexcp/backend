@@ -32,4 +32,20 @@ public class ExpenseService {
         expenseRepository.deleteById(expenseId);
     }
 
+    public List<Expense> getAllUsersExpensesSortedByAmount(String userId) {
+        return expenseRepository.findByUserIdOrderByAmountDesc(userId);
+    }
+
+    public List<Expense> getAllUsersExpensesSortedByDate(String userId) {
+        return expenseRepository.findByUserIdOrderByDateDesc(userId);
+    }
+
+    public List<Expense> getAllUsersExpensesByCategorySortedByAmount(String userId, String categoryId) {
+        return expenseRepository.findByUserIdAndCategoryIdOrderByAmountDesc(userId, categoryId);
+    }
+
+    public List<Expense> getAllUsersExpensesByCategorySortedByDate(String userId, String categoryId) {
+        return expenseRepository.findByUserIdAndCategoryIdOrderByDateDesc(userId, categoryId);
+    }
+
 }

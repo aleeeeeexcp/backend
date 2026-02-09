@@ -9,5 +9,9 @@ public interface ExpenseRepository extends MongoRepository<Expense, String> {
     
     List<Expense> findByUserId(String userId);
     List<Expense> findByUserIdAndCategoryId(String userId, String categoryId);
+    List<Expense> findByUserIdOrderByAmountDesc(String userId);
+    List<Expense> findByUserIdOrderByDateDesc(String userId);
+    List<Expense> findByUserIdAndCategoryIdOrderByAmountDesc(String userId, String categoryId);
+    List<Expense> findByUserIdAndCategoryIdOrderByDateDesc(String userId, String categoryId);
     
 }
