@@ -43,7 +43,7 @@ public class UsersService {
     } 
 
     public List<Users> getAllUsers() {
-        return usersRepository.findAll();
+        return usersRepository.findByRoleType(RoleType.USER);
     }
 
     public void deleteUsers(String id) {
