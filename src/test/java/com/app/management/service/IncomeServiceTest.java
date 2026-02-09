@@ -31,7 +31,6 @@ class IncomeServiceTest {
                 .description(description)
                 .date(date)
                 .userId(userId)
-                .categoryId(categoryId)
                 .build();
     }
 

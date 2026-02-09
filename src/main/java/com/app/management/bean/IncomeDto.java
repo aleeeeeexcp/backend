@@ -16,9 +16,7 @@ public class IncomeDto {
     private double amount;
     private String description;
     private String date;
-
     @Nullable
     private String userId;
-    @Nullable
-    private String categoryId;
+
 }

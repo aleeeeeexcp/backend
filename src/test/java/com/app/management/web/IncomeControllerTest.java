@@ -48,7 +48,6 @@ class IncomeControllerTest {
                 .description(description)
                 .date(date)
                 .userId(userId)
-                .categoryId(categoryId)
                 .build();
     }
 
@@ -60,7 +59,6 @@ class IncomeControllerTest {
                 .description(description)
                 .date(date)
                 .userId(userId)
-                .categoryId(categoryId)
                 .build();
     }
 

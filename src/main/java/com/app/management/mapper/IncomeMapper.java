@@ -17,7 +17,6 @@ public class IncomeMapper {
                 .description(income.getDescription())
                 .date(income.getDate().toString())
                 .userId(income.getUserId())
-                .categoryId(income.getCategoryId()  != null ? income.getCategoryId() : null)
                 .build();
                 
     }
@@ -30,7 +29,6 @@ public class IncomeMapper {
                 .description(incomeDto.getDescription())
                 .date(incomeDto.getDate())
                 .userId(incomeDto.getUserId())
-                .categoryId(incomeDto.getCategoryId()  != null ? incomeDto.getCategoryId() : null)
                 .build();
     }
 }
