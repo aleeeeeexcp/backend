@@ -38,7 +38,7 @@ protected void doFilterInternal(HttpServletRequest request, HttpServletResponse 
 
         if (jwtInfo != null) {
             UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
-                jwtInfo.getUserName(), 
+                jwtInfo.getUserId(), 
                 null, 
                 Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + jwtInfo.getRole()))
             );
