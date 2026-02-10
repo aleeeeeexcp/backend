@@ -29,6 +29,11 @@ public class CategoryService {
     public List<Category> getAllCategories() {
         return categoryRepository.findAll();
     }
+
+    @SuppressWarnings("null")
+    public void deleteCategory(String id) {
+        categoryRepository.deleteById(id);
+    }
     
 
 }

@@ -57,8 +57,8 @@ public class UsersController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Users>> getAllUsers() {
-        return ResponseEntity.ok(usersService.getAllUsers());
+    public ResponseEntity<List<UsersDto>> getAllUsers() {
+        return ResponseEntity.ok(usersService.getAllUsers().stream().map(UsersMapper::toUsersDto).toList());
     }
 
     private String generateServiceToken(Users users){
