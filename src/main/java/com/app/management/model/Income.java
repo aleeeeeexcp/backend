@@ -2,6 +2,9 @@ package com.app.management.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import com.mongodb.lang.Nullable;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -23,5 +26,8 @@ public class Income {
     private String description;
     private String date;
     private String userId;
+
+    @Nullable
+    private String groupId;
     
 }

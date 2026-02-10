@@ -1,7 +1,6 @@
 package com.app.management.bean;
 
 import com.mongodb.lang.Nullable;
-
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,5 +17,8 @@ public class IncomeDto {
     private String date;
     @Nullable
     private String userId;
+
+    @Nullable
+    private String groupId;
 
 }

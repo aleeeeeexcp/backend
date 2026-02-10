@@ -28,5 +28,8 @@ public class Expense {
 
     @Nullable
     private String categoryId;
+
+    @Nullable
+    private String groupId;
     
 }

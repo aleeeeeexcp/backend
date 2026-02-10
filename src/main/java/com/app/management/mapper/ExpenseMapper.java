@@ -16,9 +16,10 @@ public class ExpenseMapper {
                 .date(expense.getDate())
                 .categoryId(expense.getCategoryId() != null ? expense.getCategoryId() : null)
                 .userId(expense.getUserId() != null ? expense.getUserId() : null)
+                .groupId(expense.getGroupId() != null ? expense.getGroupId() : null)
                 .build();
     }
-
+    
     public static final Expense toExpense(ExpenseDto expenseDto) {
         return Expense.builder()
                 .id(expenseDto.getId())
@@ -27,6 +28,7 @@ public class ExpenseMapper {
                 .date(expenseDto.getDate())
                 .userId(expenseDto.getUserId() != null ? expenseDto.getUserId() : null)
                 .categoryId(expenseDto.getCategoryId() != null ? expenseDto.getCategoryId() : null)
+                .groupId(expenseDto.getGroupId() != null ? expenseDto.getGroupId() : null)
                 .build();
     }
 }

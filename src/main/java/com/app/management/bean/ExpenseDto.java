@@ -25,5 +25,8 @@ public class ExpenseDto {
 
     @Nullable
     private String userId;
+
+    @Nullable
+    private String groupId;
     
 }
