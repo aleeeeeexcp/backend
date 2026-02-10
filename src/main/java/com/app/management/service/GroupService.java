@@ -41,5 +41,16 @@ public class GroupService {
         groupRepository.save(group);
         return group;
     }
+
+    public List<Group> getUserGroups() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String userId = auth.getName();
+        return groupRepository.findByMemberIdsContaining(userId);
+    }
+
+    public List<Group> getAllGroups() {
+        return groupRepository.findAll();
+    }
+
     
 }

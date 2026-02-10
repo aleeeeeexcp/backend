@@ -29,5 +29,9 @@ public class IncomeService {
     public void deleteIncome(String userId, String incomeId) {
         incomeRepository.deleteById(incomeId);
     }
+
+    public List<Income> getIncomesByGroup(String groupId) {
+        return incomeRepository.findByGroupId(groupId);
+    }
     
 }

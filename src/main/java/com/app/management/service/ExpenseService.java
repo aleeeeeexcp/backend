@@ -48,4 +48,8 @@ public class ExpenseService {
         return expenseRepository.findByUserIdAndCategoryIdOrderByDateDesc(userId, categoryId);
     }
 
+    public List<Expense> getExpensesByGroup(String groupId) {
+        return expenseRepository.findByGroupId(groupId);
+    }
+
 }
