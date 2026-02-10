@@ -54,6 +54,7 @@ public class SecurityConfig {
                     .requestMatchers(HttpMethod.GET, "/api/expenses/byCategory").permitAll()
                     .requestMatchers(HttpMethod.GET, "/api/groups").authenticated()
                     .requestMatchers(HttpMethod.POST, "/api/groups/createGroup").authenticated()
+                    .requestMatchers(HttpMethod.GET, "/api/groups/myGroups").authenticated()
                     .anyRequest().authenticated()
             )
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
