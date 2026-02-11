@@ -52,5 +52,9 @@ public class GroupService {
         return groupRepository.findAll();
     }
 
+    public void deleteGroup(String groupId) {
+        groupRepository.deleteById(groupId);
+    }   
+
     
 }
