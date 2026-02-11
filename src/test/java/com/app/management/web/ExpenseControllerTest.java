@@ -136,6 +136,7 @@ class ExpenseControllerTest {
                 .andExpect(status().isNoContent());
     }
 
+    @SuppressWarnings("null")
     @Test
     void getAllUsersExpensesSortedByAmount_returnsExpensesSorted() throws Exception {
         List<Expense> expenses = List.of(
@@ -153,6 +154,7 @@ class ExpenseControllerTest {
                 .andExpect(jsonPath("$[1].amount").value(15.0));
     }
 
+    @SuppressWarnings("null")
     @Test
     void getAllUsersExpensesSortedByDate_returnsExpensesSorted() throws Exception {
         List<Expense> expenses = List.of(
@@ -168,6 +170,7 @@ class ExpenseControllerTest {
                 .andExpect(jsonPath("$[1].id").value("e2"));
     }
 
+    @SuppressWarnings("null")
     @Test
     void getAllUsersExpensesByCategorySortedByAmount_returnsExpensesSorted() throws Exception {
         List<Expense> expenses = List.of(
@@ -183,6 +186,7 @@ class ExpenseControllerTest {
                 .andExpect(jsonPath("$[0].amount").value(50.0));
     }
 
+    @SuppressWarnings("null")
     @Test
     void getAllUsersExpensesByCategorySortedByDate_returnsExpensesSorted() throws Exception {
         List<Expense> expenses = List.of(

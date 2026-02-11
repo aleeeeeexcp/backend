@@ -85,6 +85,7 @@ class CategoryControllerTest {
                 .andExpect(jsonPath("$[1].name").value("Transport"));
     }
 
+    @SuppressWarnings("null")
     @Test
     void deleteCategory_returnsNoContent() throws Exception {
         mockMvc.perform(delete("/api/categories/deleteCategory")
