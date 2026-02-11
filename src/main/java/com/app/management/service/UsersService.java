@@ -49,5 +49,17 @@ public class UsersService {
     public void deleteUsers(String id) {
         usersRepository.deleteById(id);
     }
+
+    @SuppressWarnings("null")
+    public void changePassword(String userId, String oldPassword, String newPassword) throws InvalidParameterException {
+        Users user = usersRepository.findById(userId).orElseThrow(() -> new InvalidParameterException("User not found"));
+        if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
+            throw new InvalidParameterException("Old password is incorrect");
+        }
+        
+        String encodedPassword = passwordEncoder.encode(newPassword);
+        user.setPassword(encodedPassword);
+        usersRepository.save(user);
+    }
     
 }

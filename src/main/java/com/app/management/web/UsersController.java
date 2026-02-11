@@ -6,12 +6,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.management.bean.AuthenticatedUsersDto;
+import com.app.management.bean.ChangePasswordParamsDto;
 import com.app.management.bean.LoginParamsDto;
 import com.app.management.bean.UsersDto;
 import com.app.management.config.JwtGenerator;
@@ -59,6 +61,12 @@ public class UsersController {
     @GetMapping
     public ResponseEntity<List<UsersDto>> getAllUsers() {
         return ResponseEntity.ok(usersService.getAllUsers().stream().map(UsersMapper::toUsersDto).toList());
+    }
+
+    @PutMapping("/changePassword")
+    public ResponseEntity<Void> changePassword(@RequestParam String id, @RequestBody ChangePasswordParamsDto changePasswordParamsDto) throws InvalidParameterException {
+        usersService.changePassword(id, changePasswordParamsDto.getOldPassword(), changePasswordParamsDto.getNewPassword());
+        return ResponseEntity.noContent().build();
     }
 
     private String generateServiceToken(Users users){
