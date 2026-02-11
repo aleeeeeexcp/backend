@@ -73,4 +73,19 @@ class IncomeServiceTest {
         incomeService.deleteIncome("user1", "i1");
         verify(incomeRepository, times(1)).deleteById("i1");
     }
+
+    @Test
+    void getIncomesByGroup_returnsGroupIncomes() {
+        List<Income> incomes = List.of(
+                createIncome("i1", "Work", 1000.0, "Salary", "2024-01-01", "user1", null),
+                createIncome("i2", "Work", 200.0, "Bonus", "2024-01-02", "user2", null)
+        );
+        when(incomeRepository.findByGroupId("g1")).thenReturn(incomes);
+
+        List<Income> result = incomeService.getIncomesByGroup("g1");
+
+        assertEquals(2, result.size());
+        assertEquals("i1", result.get(0).getId());
+        assertEquals("i2", result.get(1).getId());
+    }
 }

@@ -7,6 +7,8 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.List;
+
 import com.app.management.constants.RoleType;
 import com.app.management.model.Users;
 import com.app.management.repository.UsersRepository;
@@ -87,5 +89,26 @@ class UsersServiceTest {
         when(passwordEncoder.matches(anyString(), anyString())).thenReturn(false);
 
         assertThrows(InvalidParameterException.class, () -> usersService.login("alice", "raw"));
+    }
+
+    @Test
+    void getAllUsers_returnsListOfUsers() {
+        List<Users> users = List.of(
+                createUsers("u1", "alice", "alice@example.com", "pass1", RoleType.USER),
+                createUsers("u2", "bob", "bob@example.com", "pass2", RoleType.USER)
+        );
+        when(usersRepository.findByRoleType(RoleType.USER)).thenReturn(users);
+
+        List<Users> result = usersService.getAllUsers();
+
+        assertEquals(2, result.size());
+        assertEquals("u1", result.get(0).getId());
+        assertEquals("u2", result.get(1).getId());
+    }
+
+    @Test
+    void deleteUsers_deletesById() {
+        usersService.deleteUsers("u1");
+        verify(usersRepository).deleteById("u1");
     }
 }

@@ -13,6 +13,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -80,5 +81,11 @@ class CategoryServiceTest {
         assertEquals(2, result.size());
         assertEquals("c1", result.get(0).getId());
         assertEquals("c2", result.get(1).getId());
+    }
+
+    @Test
+    void deleteCategory_deletesById() {
+        categoryService.deleteCategory("c1");
+        verify(categoryRepository).deleteById("c1");
     }
 }

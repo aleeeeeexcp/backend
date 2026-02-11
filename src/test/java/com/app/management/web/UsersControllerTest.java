@@ -1,11 +1,15 @@
 package com.app.management.web;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.app.management.bean.AuthenticatedUsersDto;
 import com.app.management.bean.LoginParamsDto;
 import com.app.management.bean.UsersDto;
 import com.app.management.config.JwtGenerator;
@@ -21,6 +25,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.List;
 
 @WebMvcTest(UsersController.class)
 @AutoConfigureMockMvc(addFilters = false)
@@ -90,5 +96,30 @@ class UsersControllerTest {
                 .andExpect(jsonPath("$.userDto.username").value("bob"))
                 .andExpect(jsonPath("$.userDto.email").value("bob@example.com"))
                 .andExpect(jsonPath("$.userDto.roleType").value("ADMIN"));
+    }
+
+    @Test
+    void deleteUsers_returnsNoContent() throws Exception {
+        doNothing().when(usersService).deleteUsers("u1");
+
+        mockMvc.perform(delete("/api/users/delete")
+                        .param("id", "u1"))
+                .andExpect(status().isNoContent());
+    }
+
+    @Test
+    void getAllUsers_returnsListOfUsersDtos() throws Exception {
+        List<Users> users = List.of(
+                Users.builder().id("u1").username("alice").email("alice@example.com").roleType(RoleType.USER).build(),
+                Users.builder().id("u2").username("bob").email("bob@example.com").roleType(RoleType.USER).build()
+        );
+        when(usersService.getAllUsers()).thenReturn(users);
+
+        mockMvc.perform(get("/api/users"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").value("u1"))
+                .andExpect(jsonPath("$[0].username").value("alice"))
+                .andExpect(jsonPath("$[1].id").value("u2"))
+                .andExpect(jsonPath("$[1].username").value("bob"));
     }
 }

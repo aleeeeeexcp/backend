@@ -87,4 +87,75 @@ class ExpenseServiceTest {
         expenseService.deleteExpense("user1", "e1");
         verify(expenseRepository, times(1)).deleteById("e1");
     }
+
+    @Test
+    void getAllUsersExpensesSortedByAmount_returnsExpensesSorted() {
+        List<Expense> expenses = List.of(
+                createExpense("e1", "Dinner", 50.0, "2024-01-01", "user1", "cat1"),
+                createExpense("e2", "Lunch", 15.0, "2024-01-02", "user1", "cat1")
+        );
+        when(expenseRepository.findByUserIdOrderByAmountDesc("user1")).thenReturn(expenses);
+
+        List<Expense> result = expenseService.getAllUsersExpensesSortedByAmount("user1");
+
+        assertEquals(2, result.size());
+        assertEquals("e1", result.get(0).getId());
+        assertEquals(50.0, result.get(0).getAmount());
+    }
+
+    @Test
+    void getAllUsersExpensesSortedByDate_returnsExpensesSorted() {
+        List<Expense> expenses = List.of(
+                createExpense("e1", "Lunch", 15.0, "2024-01-02", "user1", "cat1"),
+                createExpense("e2", "Dinner", 50.0, "2024-01-01", "user1", "cat1")
+        );
+        when(expenseRepository.findByUserIdOrderByDateDesc("user1")).thenReturn(expenses);
+
+        List<Expense> result = expenseService.getAllUsersExpensesSortedByDate("user1");
+
+        assertEquals(2, result.size());
+        assertEquals("e1", result.get(0).getId());
+    }
+
+    @Test
+    void getAllUsersExpensesByCategorySortedByAmount_returnsExpensesSorted() {
+        List<Expense> expenses = List.of(
+                createExpense("e1", "Dinner", 50.0, "2024-01-01", "user1", "cat1")
+        );
+        when(expenseRepository.findByUserIdAndCategoryIdOrderByAmountDesc("user1", "cat1")).thenReturn(expenses);
+
+        List<Expense> result = expenseService.getAllUsersExpensesByCategorySortedByAmount("user1", "cat1");
+
+        assertEquals(1, result.size());
+        assertEquals("e1", result.get(0).getId());
+        assertEquals(50.0, result.get(0).getAmount());
+    }
+
+    @Test
+    void getAllUsersExpensesByCategorySortedByDate_returnsExpensesSorted() {
+        List<Expense> expenses = List.of(
+                createExpense("e1", "Lunch", 15.0, "2024-01-02", "user1", "cat1")
+        );
+        when(expenseRepository.findByUserIdAndCategoryIdOrderByDateDesc("user1", "cat1")).thenReturn(expenses);
+
+        List<Expense> result = expenseService.getAllUsersExpensesByCategorySortedByDate("user1", "cat1");
+
+        assertEquals(1, result.size());
+        assertEquals("e1", result.get(0).getId());
+    }
+
+    @Test
+    void getExpensesByGroup_returnsGroupExpenses() {
+        List<Expense> expenses = List.of(
+                createExpense("e1", "Groceries", 50.0, "2024-01-01", "user1", "cat1"),
+                createExpense("e2", "Dinner", 30.0, "2024-01-02", "user2", "cat1")
+        );
+        when(expenseRepository.findByGroupId("g1")).thenReturn(expenses);
+
+        List<Expense> result = expenseService.getExpensesByGroup("g1");
+
+        assertEquals(2, result.size());
+        assertEquals("e1", result.get(0).getId());
+        assertEquals("e2", result.get(1).getId());
+    }
 }

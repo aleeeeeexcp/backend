@@ -135,4 +135,65 @@ class ExpenseControllerTest {
                         .with(mockUser("user1")))
                 .andExpect(status().isNoContent());
     }
+
+    @Test
+    void getAllUsersExpensesSortedByAmount_returnsExpensesSorted() throws Exception {
+        List<Expense> expenses = List.of(
+                createExpense("e1", "Dinner", 50.0, "2024-01-01", "user1", "cat1"),
+                createExpense("e2", "Lunch", 15.0, "2024-01-02", "user1", "cat1")
+        );
+        when(expenseService.getAllUsersExpensesSortedByAmount("user1")).thenReturn(expenses);
+
+        mockMvc.perform(get("/api/expenses/sortedByAmount")
+                        .with(mockUser("user1")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").value("e1"))
+                .andExpect(jsonPath("$[0].amount").value(50.0))
+                .andExpect(jsonPath("$[1].id").value("e2"))
+                .andExpect(jsonPath("$[1].amount").value(15.0));
+    }
+
+    @Test
+    void getAllUsersExpensesSortedByDate_returnsExpensesSorted() throws Exception {
+        List<Expense> expenses = List.of(
+                createExpense("e1", "Lunch", 15.0, "2024-01-02", "user1", "cat1"),
+                createExpense("e2", "Dinner", 50.0, "2024-01-01", "user1", "cat1")
+        );
+        when(expenseService.getAllUsersExpensesSortedByDate("user1")).thenReturn(expenses);
+
+        mockMvc.perform(get("/api/expenses/sortedByDate")
+                        .with(mockUser("user1")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").value("e1"))
+                .andExpect(jsonPath("$[1].id").value("e2"));
+    }
+
+    @Test
+    void getAllUsersExpensesByCategorySortedByAmount_returnsExpensesSorted() throws Exception {
+        List<Expense> expenses = List.of(
+                createExpense("e1", "Dinner", 50.0, "2024-01-01", "user1", "cat1")
+        );
+        when(expenseService.getAllUsersExpensesByCategorySortedByAmount("user1", "cat1")).thenReturn(expenses);
+
+        mockMvc.perform(get("/api/expenses/byCategory/sortedByAmount")
+                        .param("categoryId", "cat1")
+                        .with(mockUser("user1")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").value("e1"))
+                .andExpect(jsonPath("$[0].amount").value(50.0));
+    }
+
+    @Test
+    void getAllUsersExpensesByCategorySortedByDate_returnsExpensesSorted() throws Exception {
+        List<Expense> expenses = List.of(
+                createExpense("e1", "Lunch", 15.0, "2024-01-02", "user1", "cat1")
+        );
+        when(expenseService.getAllUsersExpensesByCategorySortedByDate("user1", "cat1")).thenReturn(expenses);
+
+        mockMvc.perform(get("/api/expenses/byCategory/sortedByDate")
+                        .param("categoryId", "cat1")
+                        .with(mockUser("user1")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").value("e1"));
+    }
 }

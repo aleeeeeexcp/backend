@@ -1,6 +1,7 @@
 package com.app.management.web;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -82,5 +83,13 @@ class CategoryControllerTest {
                 .andExpect(jsonPath("$[0].name").value("Food"))
                 .andExpect(jsonPath("$[1].id").value("c2"))
                 .andExpect(jsonPath("$[1].name").value("Transport"));
+    }
+
+    @Test
+    void deleteCategory_returnsNoContent() throws Exception {
+        mockMvc.perform(delete("/api/categories/deleteCategory")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("\"c1\""))
+                .andExpect(status().isNoContent());
     }
 }
