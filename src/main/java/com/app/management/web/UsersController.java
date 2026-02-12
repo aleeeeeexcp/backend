@@ -68,6 +68,12 @@ public class UsersController {
         usersService.changePassword(id, changePasswordParamsDto.getOldPassword(), changePasswordParamsDto.getNewPassword());
         return ResponseEntity.noContent().build();
     }
+    
+    @PutMapping("/updateProfile")
+    public ResponseEntity<Void> updateProfile(@RequestParam String id, @RequestBody UsersDto usersDto) throws InvalidParameterException {
+        usersService.updateProfile(id, usersDto.getUsername(), usersDto.getEmail());
+        return ResponseEntity.noContent().build();
+    }
 
     private String generateServiceToken(Users users){
         String roleName = users.getRoleType() != null ? users.getRoleType().name() : "USER";

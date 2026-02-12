@@ -62,4 +62,11 @@ public class UsersService {
         usersRepository.save(user);
     }
     
+    @SuppressWarnings("null")
+    public void updateProfile(String id, String username, String email) throws InvalidParameterException {
+        Users user = usersRepository.findById(id).orElseThrow(() -> new InvalidParameterException("User not found"));
+        user.setUsername(username);
+        user.setEmail(email);
+        usersRepository.save(user);
+    }
 }
