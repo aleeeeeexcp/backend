@@ -34,6 +34,16 @@ public class CategoryService {
     public void deleteCategory(String id) {
         categoryRepository.deleteById(id);
     }
+
+    @SuppressWarnings("null")
+    public void updateCategory(Category category) {
+        Category existingCategory = categoryRepository.findById(category.getId()).orElse(null);
+        if (existingCategory != null) {
+            existingCategory.setName(category.getName());
+            existingCategory.setDescription(category.getDescription());
+            categoryRepository.save(existingCategory);
+        }
+    }
     
 
 }

@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,6 +44,13 @@ public class CategoryController {
     @DeleteMapping("/deleteCategory")
     public ResponseEntity<Void> deleteCategory(@RequestBody String id) {
         categoryService.deleteCategory(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/updateCategory")
+    public ResponseEntity<Void> updateCategory(@RequestBody CategoryDto categoryDto) {
+        Category category = new Category(categoryDto.getId(), categoryDto.getName(), categoryDto.getDescription());
+        categoryService.updateCategory(category);
         return ResponseEntity.noContent().build();
     }
 }
