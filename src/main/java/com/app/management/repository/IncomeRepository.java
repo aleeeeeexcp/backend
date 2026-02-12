@@ -8,7 +8,8 @@ import com.app.management.model.Income;
 public interface IncomeRepository extends MongoRepository<Income, String> {
 
     List<Income> findByUserId(String userId);
-
     List<Income> findByGroupId(String groupId);
+    List<Income> findByUserIdOrderByAmountDesc(String userId);
+    List<Income> findByUserIdOrderByDateDesc(String userId);
     
 }

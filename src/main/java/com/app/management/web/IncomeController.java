@@ -57,5 +57,27 @@ public class IncomeController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/sortedByAmount")
+    public ResponseEntity<List<IncomeDto>> getAllUsersIncomesSortedByAmount() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userId = authentication.getName();
+        List<Income> incomes = incomeService.getAllUsersIncomesSortedByAmount(userId);
+        List<IncomeDto> incomeDtos = incomes.stream()
+                                           .map(IncomeMapper::toIncomeDto)
+                                           .toList();
+        return ResponseEntity.ok(incomeDtos);
+    }
+
+    @GetMapping("/sortedByDate")
+    public ResponseEntity<List<IncomeDto>> getAllUsersIncomesSortedByDate() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userId = authentication.getName();
+        List<Income> incomes = incomeService.getAllUsersIncomesSortedByDate(userId);
+        List<IncomeDto> incomeDtos = incomes.stream()
+                                           .map(IncomeMapper::toIncomeDto)
+                                           .toList();
+        return ResponseEntity.ok(incomeDtos);
+    }
+
     
 }

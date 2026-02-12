@@ -49,6 +49,8 @@ public class SecurityConfig {
                     .requestMatchers(HttpMethod.GET, "/api/expenses/byCategory/sortedByDate").permitAll()
                     .requestMatchers(HttpMethod.POST, "/api/incomes/createIncome").permitAll()
                     .requestMatchers(HttpMethod.DELETE, "/api/incomes/delete").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/api/incomes/sortedByAmount").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/api/incomes/sortedByDate").permitAll()
                     .requestMatchers(HttpMethod.GET, "/api/incomes").permitAll()
                     .requestMatchers(HttpMethod.POST, "/api/categories/createCategory").permitAll()
                     .requestMatchers(HttpMethod.GET, "/api/categories").permitAll()

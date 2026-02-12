@@ -33,5 +33,13 @@ public class IncomeService {
     public List<Income> getIncomesByGroup(String groupId) {
         return incomeRepository.findByGroupId(groupId);
     }
+
+    public List<Income> getAllUsersIncomesSortedByAmount(String userId) {
+        return incomeRepository.findByUserIdOrderByAmountDesc(userId);
+    }
+
+    public List<Income> getAllUsersIncomesSortedByDate(String userId) {
+        return incomeRepository.findByUserIdOrderByDateDesc(userId);
+    }
     
 }
