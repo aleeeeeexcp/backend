@@ -20,6 +20,8 @@ import com.app.management.mapper.IncomeMapper;
 import com.app.management.service.ExpenseService;
 import com.app.management.service.GroupService;
 import com.app.management.service.IncomeService;
+import com.app.management.service.exceptions.InstanceNotFoundException;
+import com.app.management.service.exceptions.InvalidParameterException;
 
 @RestController
 @RequestMapping("/api/groups")
@@ -66,5 +68,15 @@ public class GroupController {
     public ResponseEntity<Void> deleteGroup(@RequestParam String groupId) {
         groupService.deleteGroup(groupId);
         return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{groupId}/leave")
+    public ResponseEntity<Void> leaveGroup(@PathVariable String groupId) {
+        try {
+            groupService.removeUserFromGroup(groupId);
+            return ResponseEntity.noContent().build();
+        } catch (InstanceNotFoundException | InvalidParameterException e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 }

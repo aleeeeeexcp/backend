@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import com.app.management.model.Group;
 import com.app.management.repository.GroupRepository;
+import com.app.management.service.exceptions.InstanceNotFoundException;
+import com.app.management.service.exceptions.InvalidParameterException;
 
 @Service
 public class GroupService {
@@ -55,7 +57,35 @@ public class GroupService {
     @SuppressWarnings("null")
     public void deleteGroup(String groupId) {
         groupRepository.deleteById(groupId);
-    }   
+    }
 
+    @SuppressWarnings("null")
+    public void removeUserFromGroup(String groupId) throws InstanceNotFoundException, InvalidParameterException {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String userId = auth.getName();
+        
+        Group group = groupRepository.findByIdAndMemberIdsContaining(groupId, userId)
+            .orElseThrow(() -> new InstanceNotFoundException("Grupo no encontrado o no eres miembro"));
+        
+        List<String> memberIds = group.getMemberIds();
+        
+        if (memberIds.size() == 1) {
+            groupRepository.deleteById(groupId);
+            return;
+        }
+
+        if (group.getOwnerId().equals(userId)) {
+            String newOwner = memberIds.stream()
+                .filter(memberId -> !memberId.equals(userId))
+                .findFirst()
+                .orElseThrow(() -> new InvalidParameterException("No se pudo encontrar un nuevo propietario"));
+            
+            group.setOwnerId(newOwner);
+        }
+
+        memberIds.remove(userId);
+        group.setMemberIds(memberIds);
+        groupRepository.save(group);
+    }
     
 }

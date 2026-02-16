@@ -61,6 +61,7 @@ public class SecurityConfig {
                     .requestMatchers(HttpMethod.POST, "/api/groups/createGroup").authenticated()
                     .requestMatchers(HttpMethod.GET, "/api/groups/myGroups").authenticated()
                     .requestMatchers(HttpMethod.DELETE, "/api/groups/delete").authenticated()
+                    .requestMatchers(HttpMethod.DELETE, "/api/groups/{groupId}/leave").authenticated()
                     .anyRequest().authenticated()
             )
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
